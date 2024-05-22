@@ -75,13 +75,13 @@ export const setAuthToken = (token) => {
 
 // Other imports...
 
-export const registerMentee = async (menteeDetails) => {
-  try {
-    const response = await api.post('/mentees/register', menteeDetails);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+export const registerMentee = async (data) => {
+  const response = await axios.post('/mentees/register', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+  return response.data;
 };
 
 export const registerMentor = async (mentorDetails) => {
