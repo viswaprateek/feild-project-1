@@ -21,7 +21,6 @@ const AdminDashboard = () => {
     registrationNumber: '',
     email: '',
     role: 'mentee',
-   
     parentsNames: '',
     parentsOccupation: '',
     bloodGroup: '',
@@ -40,7 +39,8 @@ const AdminDashboard = () => {
     sem7Gpa: '',
     sem8Gpa: '',
     mentorName: '',
-    mentorRegistrationNumber: ''
+    mentorRegistrationNumber: '',
+    photoLink: '', // Add this line
   });
 
   const handleChange = (e) => {
@@ -66,7 +66,6 @@ const AdminDashboard = () => {
         registrationNumber: '',
         email: '',
         role: 'mentee',
-        
         parentsNames: '',
         parentsOccupation: '',
         bloodGroup: '',
@@ -85,7 +84,8 @@ const AdminDashboard = () => {
         sem7Gpa: '',
         sem8Gpa: '',
         mentorName: '',
-        mentorRegistrationNumber: ''
+        mentorRegistrationNumber: '',
+        photoLink: '', // Reset this field as well
       }); // Reset form
     } catch (error) {
       console.error('Failed to register user:', error);
@@ -157,7 +157,16 @@ const AdminDashboard = () => {
                 onChange={handleChange}
               />
             </Grid>
-            
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                label="Photo Link"
+                name="photoLink"
+                value={userDetails.photoLink}
+                onChange={handleChange}
+              />
+            </Grid>
             {userDetails.role === 'mentee' && (
               <>
                 <Grid item xs={12} sm={6}>

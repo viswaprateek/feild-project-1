@@ -76,12 +76,13 @@ export const setAuthToken = (token) => {
 // Other imports...
 
 export const registerMentee = async (data) => {
-  const response = await axios.post('/mentees/register', data, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  });
-  return response.data;
+  try {
+    const response = await api.post('/mentees/register', data);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to register mentee:', error);
+    throw error;
+  }
 };
 
 export const registerMentor = async (mentorDetails) => {
@@ -89,6 +90,7 @@ export const registerMentor = async (mentorDetails) => {
     const response = await api.post('/mentors/register', mentorDetails);
     return response.data;
   } catch (error) {
+    console.error('Failed to register mentor:', error);
     throw error;
   }
 };

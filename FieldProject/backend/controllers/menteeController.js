@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const Mentee = require('../models/Mentee');
 const Mentor = require('../models/Mentor');
 const bcrypt = require('bcryptjs');
@@ -30,6 +29,7 @@ exports.registerMentee = async (req, res) => {
     sem6Gpa,
     sem7Gpa,
     sem8Gpa,
+    photoLink // Add this line
   } = req.body;
 
   try {
@@ -38,7 +38,7 @@ exports.registerMentee = async (req, res) => {
       return res.status(409).json({ message: 'Email already in use' });
     }
 
-    const mentor = await Mentor.findOne({ name: mentorName, registrationNumber: mentorRegistrationNumber });
+    const mentor = await Mentor.findOne({ registrationNumber: mentorRegistrationNumber });
     if (!mentor) {
       return res.status(404).json({ message: 'Mentor not found' });
     }
@@ -52,7 +52,7 @@ exports.registerMentee = async (req, res) => {
       email,
       role,
       password: hashedPassword,
-      mentor: mentor._id, // Assign mentor
+      mentor: mentor._id,
       parentsNames,
       parentsOccupation,
       bloodGroup,
@@ -70,6 +70,7 @@ exports.registerMentee = async (req, res) => {
       sem6Gpa,
       sem7Gpa,
       sem8Gpa,
+      photoLink // Include this line
     });
 
     await mentee.save();
