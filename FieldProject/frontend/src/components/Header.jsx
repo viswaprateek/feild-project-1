@@ -5,13 +5,13 @@ function Header() {
     <AppBar position="static" color="default" elevation={1}>
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1, color: 'primary.main' }}>
-          Freelancers.com
+          MentorConnect.vnrvjiet
         </Typography>
         <Link to="/login">
         <Button color="primary" variant="outlined">Login</Button>
         </Link>
-        <Link to="/signup">
-        <Button color="primary" variant="contained" sx={{ ml: 1 }}>Register</Button>
+        <Link to="/admin/login">
+        <Button color="primary" variant="contained" sx={{ ml: 1 }}>Admin</Button>
         </Link>
       </Toolbar>
     </AppBar>

@@ -27,7 +27,7 @@ import {
 } from '@mui/icons-material';
 
 const Layout = ({ children }) => {
-  const { userRole, logout } = useAuth();
+  const { userRole,name, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -42,15 +42,22 @@ const Layout = ({ children }) => {
 
       {/* App Bar */}
       <AppBar position="fixed" sx={{ backgroundColor: '#1976D2', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-        <Toolbar>
-          <Typography variant="h4" component="div" sx={{ fontFamily: 'Poppins, sans-serif', flex: 1, textAlign: 'center', color: 'white' }}>
-            Freelancers.com
-          </Typography>
-          <Typography variant="h6" component="div" sx={{ fontFamily: 'Poppins, sans-serif',  color: 'white' }}>
-    Role: {userRole}
-            </Typography>
-        </Toolbar>
-      </AppBar>
+  <Toolbar>
+    <Typography variant="h4" component="div" sx={{ fontFamily: 'Poppins, sans-serif', flex: 1, textAlign: 'center', color: 'white' }}>
+      MentorConnect.vnrvjiet
+    </Typography>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+      <Typography variant="h1" component="div" sx={{ fontFamily: 'Poppins, sans-serif', fontSize: '1.5rem', color: 'white' }}>
+      👋🏻{name}
+        <Typography variant="h6" component="span" sx={{ marginLeft: 1, fontSize: '0.8rem', color: 'white' }}>
+          ({userRole})
+        </Typography>
+      </Typography>
+    </Box>
+  </Toolbar>
+</AppBar>
+
+
 
       {/* Sidebar */}
       <Drawer
@@ -121,7 +128,7 @@ const Layout = ({ children }) => {
         align="center"
         sx={{ backgroundColor: '#1976D2', py: 2, color: 'white', mt: 'auto', position: 'fixed', bottom: 0, width: '100%' }}
       >
-        @Freelancers.com 2023 Pvt. Ltd.
+        @MentorConnect.vnrvjiet.
       </Typography>
     </Box>
   );

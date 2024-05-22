@@ -17,6 +17,9 @@ import { AuthProvider } from './AuthContext';
 import ContractDetail from './components/ContractDetail';
 
 
+import AdminLogin from './components/AdminLogin';
+import AdminDashboard from './components/AdminDashboard';
+
 function App() {
   // Check if the user is authenticated (e.g., by checking cookies or the authentication state)
   const { authenticated } = useAuth();
@@ -91,6 +94,11 @@ console.log(authenticated)
           element={<Profile />}
         /> */}
 
+
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+
+        
         <Route path="*" element={<ErrorPage />} />
 
 
