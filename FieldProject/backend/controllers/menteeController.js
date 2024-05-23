@@ -80,3 +80,30 @@ exports.registerMentee = async (req, res) => {
     res.status(500).json({ message: 'Error registering mentee', error: error.message });
   }
 };
+
+exports.getMenteesByYear = async (req, res) => {
+  const { year } = req.params;
+
+  try {
+    const mentees = await Mentee.find({ year });
+    res.status(200).json(mentees);
+  } catch (error) {
+    console.error('Error fetching mentees by year:', error);
+    res.status(500).json({ message: 'Error fetching mentees', error: error.message });
+  }
+};
+
+exports.getMenteeById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const mentee = await Mentee.findById(id);
+    if (!mentee) {
+      return res.status(404).json({ message: 'Mentee not found' });
+    }
+    res.status(200).json(mentee);
+  } catch (error) {
+    console.error('Error fetching mentee:', error);
+    res.status(500).json({ message: 'Error fetching mentee', error: error.message });
+  }
+};

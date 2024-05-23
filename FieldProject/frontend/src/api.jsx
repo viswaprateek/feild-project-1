@@ -96,6 +96,28 @@ export const registerMentor = async (mentorDetails) => {
 };
 
 
+export const getMenteesByYear = async (year) => {
+  try {
+    const response = await api.get(`/mentees/year/${year}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch mentees for year ${year}:`, error);
+    throw error;
+  }
+};
+
+export const getMenteeById = async (id) => {
+  try {
+    const response = await api.get(`/mentees/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch mentee with ID ${id}:`, error);
+    throw error;
+  }
+};
+
+
+
 
 //END NEW ROUTES
 export const signup = async ({ email, password, name, role, bio, skills, portfolio, projects, bids }) => {
