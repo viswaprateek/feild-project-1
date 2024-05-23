@@ -1,12 +1,14 @@
-// AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
 import { setAuthToken } from './api'; // Import the setAuthToken function
 import { useCookies } from 'react-cookie';
+import { useMentee } from './MenteeContext'; // Import useMentee hook
 
 // Create a context to manage authentication state
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+  const { setMenteeId } = useMentee(); // Use the setMenteeId function from MenteeContext
+
   // State variables to manage authentication status, access token, user role, user ID, and name
   const [authenticated, setAuthenticated] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['role', 'accessToken', 'userId', 'name']);
@@ -29,9 +31,13 @@ export function AuthProvider({ children }) {
       setUserRole(role1);
       setUserId(savedUserId); // Set the userId retrieved from cookies
       setName(savedName); // Set the name retrieved from cookies
+      
+      // Set menteeId if role is mentee
+      if (role1 === 'mentee') {
+        setMenteeId(savedUserId);
+      }
     }
-  }, [cookies]);
-  
+  }, [cookies, setMenteeId]);
 
   const login = (token, role, id, userName) => {
     setCookie('accessToken', token, { path: '/', secure: true, sameSite: 'None' });
@@ -44,8 +50,12 @@ export function AuthProvider({ children }) {
     setUserId(id);
     setName(userName);
     setAuthToken(token);
+    
+    // Set menteeId if role is mentee
+    if (role === 'mentee') {
+      setMenteeId(id);
+    }
   }
-  
 
   const logout = () => {
     removeCookie('accessToken', { path: '/' });

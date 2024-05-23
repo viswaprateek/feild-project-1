@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Grid, Card, CardContent, Typography, CircularProgress } from '@mui/material';
-import { getMenteesByYear } from '../api'; // Import the function to fetch mentees by year
+import { getMenteesByYear } from '../api';
 import MiniLayout from './MiniLayout';
+import { useMentee } from '../MenteeContext';
 
 const MenteesList = () => {
   const { year } = useParams();
   const navigate = useNavigate();
+  const { setMenteeId } = useMentee();
   const [mentees, setMentees] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -26,8 +28,9 @@ const MenteesList = () => {
   }, [year]);
 
   const handleMenteeClick = (menteeId) => {
+    setMenteeId(menteeId);
     navigate(`/mentee/dashboard/${menteeId}`);
-  };
+    };
 
   if (loading) {
     return <CircularProgress />;
