@@ -6,6 +6,9 @@ const jobRoutes = require('./routes/jobRoutes');
 const bidRoutes = require('./routes/bidRoutes'); // Import bid routes
 const contractRoutes = require('./routes/contracts');
 const messageRoutes = require('./routes/messagesRoutes');
+const menteeRoutes = require('./routes/menteeRoutes');
+const mentorRoutes = require('./routes/mentorRoutes');
+
 
 require('dotenv').config();
 
@@ -20,6 +23,8 @@ app.use('/job', jobRoutes);
 app.use('/bids', bidRoutes);
 app.use('/contracts', contractRoutes);
 app.use('/messages', messageRoutes);
+app.use('/mentees', menteeRoutes);
+app.use('/mentors', mentorRoutes);
 
 
 

@@ -69,6 +69,33 @@ export const setAuthToken = (token) => {
  */
 // api.js
 
+
+
+// NEW ROUTES
+
+// Other imports...
+
+export const registerMentee = async (menteeDetails) => {
+  try {
+    const response = await api.post('/mentees/register', menteeDetails);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const registerMentor = async (mentorDetails) => {
+  try {
+    const response = await api.post('/mentors/register', mentorDetails);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
+//END NEW ROUTES
 export const signup = async ({ email, password, name, role, bio, skills, portfolio, projects, bids }) => {
   try {
     const response = await api.post('/user-api/auth/signup', {
@@ -101,14 +128,15 @@ export const signup = async ({ email, password, name, role, bio, skills, portfol
  * @returns {Promise} - A Promise that resolves to the response data if successful.
  * @throws {Error} - An error if the login request fails.
  */
-export const loginuser = async (name, password) => {
+export const loginuser = async (name, password, role) => {
   try {
-    const response = await api.post('/user-api/auth/login', { name, password });
-    return response.data; // Return the response data if the login is successful.
+    const response = await api.post('/user-api/auth/login', { name, password, role });
+    return response.data;
   } catch (error) {
-    throw error; // Throw an error if the login request fails.
+    throw error;
   }
 };
+
 
 
 /**
