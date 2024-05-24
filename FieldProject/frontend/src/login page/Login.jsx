@@ -3,8 +3,6 @@ import { useAuth } from "../AuthContext";
 import { loginuser } from "../api";
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../App.css'; 
-
 function Login() {
   const { login } = useAuth();
   const [name, setName] = useState("");
@@ -31,20 +29,20 @@ function Login() {
         <Row className="justify-content-center">
           <Col className="text-center">
             <img 
-              src="https://i.imgur.com/FkLkjAy.png" 
+              src="https://media.licdn.com/dms/image/C560BAQFKt8O5GdaFjw/company-logo_200_200/0/1680080095222/vnr_vignanajyothiinstituteofengineeringandtechnology_logo?e=2147483647&v=beta&t=TbOLxNjzU1LYPUoXNYPFMXd3-pUKhPwWyyyFfOBZn08" 
               alt="Logo" 
               className="logo" 
             />
-            <h1 className="h3 my-1 fw-normal text-white"><strong>VNR VJIET</strong></h1>
-            {/* <h2 className="h4 my-1 fw-normal text-white">Bachupally</h2> */}
-            <h3 className="h5 my-1 fw-normal text-white"><i>Mentor Connect</i></h3>
+            <h1 className="h3 mb-3 fw-normal text-white">VNR VJIET</h1>
+            <h2 className="h4 mb-3 fw-normal text-white">Bachupally</h2>
+            <h3 className="h5 mb-3 fw-normal text-white">MTP</h3>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col>
-            <h4 className="my-3 fw-normal text-center text-white"><strong>Login</strong></h4>
+            <h4 className="mb-3 fw-normal text-center text-white">Login</h4>
             <Form>
-              <Form.Group className="mb-2" controlId="role">
+              <Form.Group className="mb-3" controlId="role">
                 <Form.Label className="text-white">Role</Form.Label>
                 <Form.Select
                   value={role}
@@ -55,7 +53,7 @@ function Login() {
                   <option value="mentee">Mentee</option>
                 </Form.Select>
               </Form.Group>
-              <Form.Group className="mb-2" controlId="name">
+              <Form.Group className="mb-3" controlId="name">
                 <Form.Label className="text-white">Email Address</Form.Label>
                 <Form.Control
                   type="email"

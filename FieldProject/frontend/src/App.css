@@ -40,3 +40,32 @@
 .read-the-docs {
   color: #888;
 } */
+.login-background {
+  background-image: url('https://images.shiksha.com/mediadata/images/1695813984phpzgd6M3.jpeg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  margin-bottom: 10px;
+  max-width: 120px;
+  height: auto;
+}
+
+.text-white {
+  color: white;
+}

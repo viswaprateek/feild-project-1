@@ -1,138 +1,79 @@
 import React from 'react';
-import {
-  Box,
-  Container,
-  CssBaseline,
-  AppBar,
-  Toolbar,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-  IconButton,
-  Button,
-} from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import { useNavigate } from 'react-router-dom';
-import {
-  ExitToApp,
-  Dashboard as DashboardIcon,
-  Business as BusinessIcon,
-  Apartment as ApartmentIcon,
-  Notifications as NotificationsIcon,
-  AccountCircle as AccountCircleIcon,
-  Delete as DeleteIcon,
-} from '@mui/icons-material';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const Layout = ({ children }) => {
-  const { userRole,name, logout } = useAuth();
+  const { userRole, name, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Implement logic to clear user authentication (e.g., remove cookies or clear state)
     logout();
-    // Redirect to the registration page after logout
     navigate('/');
   };
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>      <CssBaseline />
-
+    <div className="d-flex flex-column min-vh-100">
       {/* App Bar */}
-      <AppBar position="fixed" sx={{ backgroundColor: '#1976D2', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-  <Toolbar>
-    <Typography variant="h4" component="div" sx={{ fontFamily: 'Poppins, sans-serif', flex: 1, textAlign: 'center', color: 'white' }}>
-      MentorConnect.vnrvjiet
-    </Typography>
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-      <Typography variant="h1" component="div" sx={{ fontFamily: 'Poppins, sans-serif', fontSize: '1.5rem', color: 'white' }}>
-      👋🏻{name}
-        <Typography variant="h6" component="span" sx={{ marginLeft: 1, fontSize: '0.8rem', color: 'white' }}>
-          ({userRole})
-        </Typography>
-      </Typography>
-    </Box>
-  </Toolbar>
-</AppBar>
-
-
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div className="container-fluid">
+          <span className="navbar-brand mx-auto fs-1">
+            MentorConnect.vnrvjiet
+          </span>
+          <div className="d-flex flex-column align-items-end">
+            <span className="navbar-text fs-4">
+              👋🏻 {name}
+              <span className="fs-6"> ({userRole})</span>
+            </span>
+          </div>
+        </div>
+      </nav>
 
       {/* Sidebar */}
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: '220px',
-          flexShrink: 0,
-          zIndex: (theme) => theme.zIndex.drawer,
-          '& .MuiDrawer-paper': {
-            width: '220px',
-            backgroundColor: '#1976D2',
-          },
-        }}
-      >
-        <Toolbar />
-        <List>
-    
-            <>
-              <ListItem button component={Link} to="/user/dashboard" sx={{ mb: 2, color: 'white' }}>
-                <DashboardIcon />
-                <ListItemText primary="Dashboard" />
-              </ListItem>
-              <ListItem button component={Link} to="/user/jobs" sx={{ mb: 2, color: 'white' }}>
-                <BusinessIcon />
-                <ListItemText primary="Jobs" />
-              </ListItem>
-          {/* Conditional menu item for Freelancer */}
-           {/* {userRole === "FREELANCER" && (
-              <ListItem button component={Link} to="/user/bids" sx={{ mb: 2, color: 'white' }}>
-                <ApartmentIcon />
-                <ListItemText primary="My Jobs" />
-              </ListItem>
-                  )} */}
-              <ListItem button component={Link} to="/user/myjobs" sx={{ mb: 2, color: 'white' }}>
-                <ApartmentIcon />
-                <ListItemText primary="My Jobs" />
-              </ListItem>
-              <ListItem button component={Link} to="/user/profile" sx={{ mb: 2, color: 'white' }}>
-                <AccountCircleIcon />
-                <ListItemText primary="Profile" />
-              </ListItem>
-              <Button sx={{ color: 'white', marginTop: 'auto' }} onClick={handleLogout}>
-                <ExitToApp />
-                   Logout
-              </Button>
-            </>
-        </List>
-      </Drawer>
+      <div className="d-flex flex-grow-1">
+        <div className="bg-primary" style={{ width: '220px' }}>
+          <nav className="navbar navbar-dark bg-primary flex-column p-3" style={{ height: '100vh' }}>
+            <ul className="nav nav-pills flex-column mb-auto">
+              <li className="nav-item mb-2">
+                <Link className="nav-link text-white" to="/user/dashboard">
+                  <i className="bi bi-speedometer2"></i> Dashboard
+                </Link>
+              </li>
+              <li className="nav-item mb-2">
+                <Link className="nav-link text-white" to="/user/jobs">
+                  <i className="bi bi-briefcase"></i> Jobs
+                </Link>
+              </li>
+              <li className="nav-item mb-2">
+                <Link className="nav-link text-white" to="/user/myjobs">
+                  <i className="bi bi-building"></i> My Jobs
+                </Link>
+              </li>
+              <li className="nav-item mb-2">
+                <Link className="nav-link text-white" to="/user/profile">
+                  <i className="bi bi-person-circle"></i> Profile
+                </Link>
+              </li>
+            </ul>
+            <button className="btn btn-danger mt-auto" onClick={handleLogout}>
+              <i className="bi bi-box-arrow-right"></i> Logout
+            </button>
+          </nav>
+        </div>
 
-      {/* Main Content */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          overflow: 'auto', // Enable scrolling
-          height: 'calc(100vh - 64px)', // Adjust the height as needed
-        }}
-      >
-        <Toolbar />
-        {children}
-      </Box>
+        {/* Main Content */}
+        <main className="flex-grow-1 p-3" style={{ overflow: 'auto', marginTop: '56px' }}>
+          {children}
+        </main>
+      </div>
 
       {/* Footer */}
-      <Typography
-        variant="body2"
-        color="textSecondary"
-        align="center"
-        sx={{ backgroundColor: '#1976D2', py: 2, color: 'white', mt: 'auto', position: 'fixed', bottom: 0, width: '100%' }}
-      >
+      <footer className="bg-primary text-white text-center py-2" style={{ position: 'fixed', bottom: 0, width: '100%' }}>
         @MentorConnect.vnrvjiet.
-      </Typography>
-    </Box>
+      </footer>
+    </div>
   );
 };
 
 export default Layout;
-

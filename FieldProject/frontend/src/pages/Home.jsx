@@ -1,17 +1,19 @@
-import Header from '../components/Header';
-import MainSection from '../components/HeroSection';
+
+//import MainSection from '../components/HeroSection';
 import Footer from '../components/Footer';
-import AboutSection from '../components/AboutSection';
-import UserFlowSection from '../components/UserFlowSection';
+import Features from '../landing page/Features';
+//import AboutSection from '../components/AboutSection';
+//import UserFlowSection from '../components/UserFlowSection';
+import Header from '../landing page/Header';
+import HeroSection from '../landing page/HeroSection';
 
 function Home() {
   return (
     <div>
-      <Header />
-      <MainSection />
-      <AboutSection />
-      <UserFlowSection />
-        
+      <Header/>
+      <HeroSection/>
+      <Features/>
+      
       <Footer />
     </div>
   );
