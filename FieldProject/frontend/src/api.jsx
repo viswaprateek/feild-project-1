@@ -75,11 +75,12 @@ export const setAuthToken = (token) => {
 
 // Other imports...
 
-export const registerMentee = async (menteeDetails) => {
+export const registerMentee = async (data) => {
   try {
-    const response = await api.post('/mentees/register', menteeDetails);
+    const response = await api.post('/mentees/register', data);
     return response.data;
   } catch (error) {
+    console.error('Failed to register mentee:', error);
     throw error;
   }
 };
@@ -89,10 +90,52 @@ export const registerMentor = async (mentorDetails) => {
     const response = await api.post('/mentors/register', mentorDetails);
     return response.data;
   } catch (error) {
+    console.error('Failed to register mentor:', error);
     throw error;
   }
 };
 
+
+export const getMenteesByYear = async (year) => {
+  try {
+    const response = await api.get(`/mentees/year/${year}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch mentees for year ${year}:`, error);
+    throw error;
+  }
+};
+
+export const getMenteeById = async (id) => {
+  try {
+    const response = await api.get(`/mentees/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch mentee with ID ${id}:`, error);
+    throw error;
+  }
+};
+
+
+export const getMentors = async () => {
+  try {
+    const response = await api.get(`/mentors/all`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch mentee with ID ${id}:`, error);
+    throw error;
+  }
+};
+
+export const fetchMentorById = async (userId) => {
+  try {
+    const response = await api.get(`/mentors/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching mentor:', error);
+    throw error;
+  }
+};
 
 
 //END NEW ROUTES
