@@ -24,6 +24,7 @@ const AdminDashboard = () => {
     parentsNames: '',
     parentsOccupation: '',
     phone:'',
+    class1:'',
     bloodGroup: '',
     nationality: '',
     religion: '',
@@ -70,6 +71,7 @@ const AdminDashboard = () => {
         parentsNames: '',
         parentsOccupation: '',
         phone:'',
+        class1:'',
         bloodGroup: '',
         nationality: '',
         religion: '',
@@ -240,6 +242,16 @@ const AdminDashboard = () => {
                 label="Phone"
                 name="phone"
                 value={userDetails.phone}
+                onChange={handleChange}
+              />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                label="Class1"
+                name="class1"
+                value={userDetails.class1}
                 onChange={handleChange}
               />
               </Grid>

@@ -42,18 +42,25 @@ const MenteesList = () => {
         <Grid container spacing={2}>
           {mentees.map((mentee) => (
             <Grid item xs={12} sm={6} md={3} key={mentee._id}>
-              <Card style={{minHeight:'450px',maxHeight:'450px'}}onClick={() => handleMenteeClick(mentee._id)}>
-                <CardContent>
-                  <img src={mentee.photoLink} alt={`${mentee.name}'s profile`} style={{ width: '100%', height: 'auto' }} />
-                  <Typography variant="h6" component="div">
-                    {mentee.name}
-                  </Typography>
-                  <Typography color="textSecondary">
-                    {mentee.registrationNumber}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
+            <Card style={{ width: 'auto', height: '350px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', borderRadius: '8px' }} onClick={() => handleMenteeClick(mentee._id)}>
+              <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', width: '100%' }}>
+                <img src={mentee.photoLink} alt={`${mentee.name}'s profile`} style={{ width: 'auto', height: '200px', objectFit: 'cover', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)', marginBottom: '20px' }} />
+                <Typography variant="h6" component="div">
+                  Name - {mentee.name}
+                </Typography>
+                <Typography color="textSecondary">
+                  Registration - {mentee.registrationNumber}
+                </Typography>
+                <Typography color="textSecondary">
+                  Class - {mentee.class1}
+                </Typography>
+                <Typography color="textSecondary">
+                  Phone - {mentee.phone}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          
           ))}
         </Grid>
       </Container>

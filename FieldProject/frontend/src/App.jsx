@@ -21,7 +21,7 @@ import MentorDashboard from './pages/MentorDashboard';
 import MenteesList from './components/MenteesList';
 import Academics from './components/Academics';
 import Nonacademics from './components/Nonacademics';
-import Attendence from './components/Attendence';
+import Attendance from './components/Attendance';
 import MentorRemarks from './components/MentorRemarks';
 import Approvals from './components/Approvals';
 import MeetingSchedules from './components/MeetingSchedules';
@@ -108,7 +108,7 @@ console.log(authenticated)
         <Route path="/nonacademics" element={<Nonacademics />} />
         <Route path="/remarks" element={<MentorRemarks />} />
 
-        <Route path="/attendence" element={<Attendence />} />
+        <Route path="/attendance" element={<Attendance />} />
         <Route path="/approvals" element={<Approvals />} />
         <Route path="/meetingschedules" element={<MeetingSchedules />} />
         <Route path="/changepassword" element={<ChangePassword />} />

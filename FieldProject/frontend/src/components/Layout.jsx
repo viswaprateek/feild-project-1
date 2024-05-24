@@ -154,7 +154,7 @@ const Layout = ({ children }) => {
                 </Button>
               </MenuItem>
             </Menu>
-            <ListItem button component={Link} to="/attendence" sx={{ mb: 2, color: 'white' }}>
+            <ListItem button component={Link} to="/attendance" sx={{ mb: 2, color: 'white' }}>
               <AssignmentTurnedInIcon />
               <ListItemText primary="Attendance" />
             </ListItem>

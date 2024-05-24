@@ -137,6 +137,17 @@ export const fetchMentorById = async (userId) => {
   }
 };
 
+export const getAttendanceByUserId = async (userId) => {
+  try {
+    const response = await api.get(`/attendance/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching attendance data:', error);
+    throw error;
+  }
+};
+
+
 
 //END NEW ROUTES
 export const signup = async ({ email, password, name, role, bio, skills, portfolio, projects, bids }) => {

@@ -60,7 +60,7 @@ const MenteeDashboard = () => {
                   Role: {mentee.role}
                 </Typography>
               </Box>
-              <Avatar src={mentee.photoLink} alt={`${mentee.name}'s profile`} sx={{ width: 150, height: 150, boxShadow: 2 }} />
+              <Avatar src={mentee.photoLink} alt={`${mentee.name}'s profile`} sx={{ width: 150, height: 150, boxShadow: 5 }} />
             </Box>
             <Divider sx={{ my: 2 }} />
             <Grid container spacing={3}>

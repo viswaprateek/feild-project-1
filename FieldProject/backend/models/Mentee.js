@@ -10,6 +10,7 @@ const MenteeSchema = new mongoose.Schema({
   mentor: { type: mongoose.Schema.Types.ObjectId, ref: 'Mentor' }, // Reference to Mentor
   photoLink: { type: String }, // Add this line
   phone :{ type:Number },
+  class1: {type : String , required: true},
   parentsNames: { type: String },
   parentsOccupation: { type: String },
   bloodGroup: { type: String },
