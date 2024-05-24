@@ -280,32 +280,35 @@ body.dark .mode .sun-moon i.moon{
     transition: var(--tran-04);
 }
 
-body.dark .switch::before{
-    left: 20px;
+.read-the-docs {
+  color: #888;
+} */
+.login-background {
+  background-image: url('https://images.shiksha.com/mediadata/images/1695813984phpzgd6M3.jpeg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.home{
-    position: absolute;
-    top: 0;
-    top: 0;
-    left: 250px;
-    height: 100vh;
-    width: calc(100% - 250px);
-    background-color: var(--body-color);
-    transition: var(--tran-05);
-}
-.home .text{
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--text-color);
-    padding: 12px 60px;
+.login-container {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.sidebar.close ~ .home{
-    left: 70px;
-    height: 100vh;
-    width: calc(100% - 78px);
+.logo {
+  margin-bottom: 10px;
+  max-width: 120px;
+  height: auto;
 }
-body.dark .home .text{
-    color: var(--text-color);
+
+.text-white {
+  color: white;
 }

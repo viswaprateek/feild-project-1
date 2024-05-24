@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
+import Layout from './Layout';
 function ChangePassword() {
   const { accessToken } = useAuth();
   const [currentPassword, setCurrentPassword] = useState("");
@@ -23,6 +23,7 @@ function ChangePassword() {
   };
 
   return (
+    <Layout>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div>
@@ -63,6 +64,7 @@ function ChangePassword() {
         </Button>
       </div>
     </Container>
+    </Layout>
   );
 }
 
