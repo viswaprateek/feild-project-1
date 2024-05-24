@@ -8,7 +8,8 @@ const MenteeSchema = new mongoose.Schema({
   role: { type: String, default: 'mentee' },
   password: { type: String, required: true },
   mentor: { type: mongoose.Schema.Types.ObjectId, ref: 'Mentor' }, // Reference to Mentor
-
+  photoLink: { type: String }, // Add this line
+  phone :{ type:Number },
   parentsNames: { type: String },
   parentsOccupation: { type: String },
   bloodGroup: { type: String },
