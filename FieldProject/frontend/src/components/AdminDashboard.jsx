@@ -23,6 +23,7 @@ const AdminDashboard = () => {
     role: 'mentee',
     parentsNames: '',
     parentsOccupation: '',
+    phone:'',
     bloodGroup: '',
     nationality: '',
     religion: '',
@@ -68,6 +69,7 @@ const AdminDashboard = () => {
         role: 'mentee',
         parentsNames: '',
         parentsOccupation: '',
+        phone:'',
         bloodGroup: '',
         nationality: '',
         religion: '',
@@ -231,6 +233,16 @@ const AdminDashboard = () => {
                     onChange={handleChange}
                   />
                 </Grid>
+                <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                label="Phone"
+                name="phone"
+                value={userDetails.phone}
+                onChange={handleChange}
+              />
+              </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     variant="outlined"

@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
-  Container,
   CssBaseline,
   AppBar,
   Toolbar,
@@ -10,8 +9,9 @@ import {
   ListItem,
   ListItemText,
   Typography,
-  IconButton,
   Button,
+  Menu,
+  MenuItem
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
@@ -22,27 +22,34 @@ import { useMentee } from '../MenteeContext'; // Import useMentee hook
 import {
   ExitToApp,
   Dashboard as DashboardIcon,
-  Business as BusinessIcon,
-  Apartment as ApartmentIcon,
-  Notifications as NotificationsIcon,
-  AccountCircle as AccountCircleIcon,
-  Delete as DeleteIcon,
+  School as SchoolIcon, // For Academics
+  SportsEsports as SportsEsportsIcon, // For Non-Academics
+  Event as EventIcon, // For Meeting Schedules
+  Assignment as AssignmentIcon, // For Approvals
+  Feedback as FeedbackIcon, // For Mentor Remarks
+  Lock as LockIcon, // For Change Password
+  AssignmentTurnedIn as AssignmentTurnedInIcon, // For Attendance
 } from '@mui/icons-material';
 
 const Layout = ({ children }) => {
   const { userRole, name, logout } = useAuth();
   const navigate = useNavigate();
-  
   const { menteeId } = useMentee(); // Access menteeId from the context
+
+  const [anchorEl, setAnchorEl] = useState(null); // State to manage the menu anchor element
 
   const handleLogout = () => {
     logout();
     navigate('/');
-
   };
-  
-  // Conditional rendering for redirecting to MenteeDashboard if menteeId is available
 
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
@@ -81,30 +88,87 @@ const Layout = ({ children }) => {
         <Toolbar />
         <List>
           <>
-          <ListItem button component={Link} to={`/mentee/dashboard/${menteeId}`} sx={{ mb: 2, color: 'white' }}>
-            <DashboardIcon />
-            <ListItemText primary="Basic Info" />
-
+            <ListItem button component={Link} to={`/menteedashboard`} sx={{ mb: 2, color: 'white' }}>
+              <DashboardIcon />
+              <ListItemText primary="Basic Info" />
             </ListItem>
-            <ListItem button component={Link} to="/user/jobs" sx={{ mb: 2, color: 'white' }}>
-              <BusinessIcon />
-              <ListItemText primary="Jobs" />
+            <ListItem button onClick={handleMenuClick} sx={{ mb: 2, color: 'white' }}>
+              <AssignmentIcon />
+              <ListItemText primary="Performance" />
             </ListItem>
-           
-            {/* Conditional menu item for Freelancer */}
-            {/* {userRole === "FREELANCER" && (
-              <ListItem button component={Link} to="/user/bids" sx={{ mb: 2, color: 'white' }}>
-                <ApartmentIcon />
-                <ListItemText primary="My Jobs" />
-              </ListItem>
-            )} */}
-            <ListItem button component={Link} to="/user/myjobs" sx={{ mb: 2, color: 'white' }}>
-              <ApartmentIcon />
-              <ListItemText primary="My Jobs" />
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              sx={{
+                '& .MuiPaper-root': {
+                  backgroundColor: '#1976D2',
+                  color: 'white',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                },
+              }}
+            >
+              <MenuItem onClick={handleMenuClose} sx={{ justifyContent: 'flex-start' }}>
+                <Button
+                  variant="text"
+                  fullWidth
+                  component={Link}
+                  to="/academics"
+                  sx={{
+                    textAlign: 'left',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: '#115293',
+                    },
+                  }}
+                >
+                  <SchoolIcon sx={{ mr: 1 }} />
+                  Academics
+                </Button>
+              </MenuItem>
+              <MenuItem onClick={handleMenuClose} sx={{ justifyContent: 'flex-start' }}>
+                <Button
+                  variant="text"
+                  fullWidth
+                  component={Link}
+                  to="/nonacademics"
+                  sx={{
+                    textAlign: 'left',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: '#115293',
+                    },
+                  }}
+                >
+                  <SportsEsportsIcon sx={{ mr: 1 }} />
+                  Non-Academics
+                </Button>
+              </MenuItem>
+            </Menu>
+            <ListItem button component={Link} to="/attendence" sx={{ mb: 2, color: 'white' }}>
+              <AssignmentTurnedInIcon />
+              <ListItemText primary="Attendance" />
             </ListItem>
-            <ListItem button component={Link} to="/user/profile" sx={{ mb: 2, color: 'white' }}>
-              <AccountCircleIcon />
-              <ListItemText primary="Profile" />
+            <ListItem button component={Link} to="/approvals" sx={{ mb: 2, color: 'white' }}>
+              <AssignmentIcon />
+              <ListItemText primary="Approvals" />
+            </ListItem>
+            <ListItem button component={Link} to="/meetingschedules" sx={{ mb: 2, color: 'white' }}>
+              <EventIcon />
+              <ListItemText primary="Meeting Schedules" />
+            </ListItem>
+            <ListItem button component={Link} to="/changepassword" sx={{ mb: 2, color: 'white' }}>
+              <LockIcon />
+              <ListItemText primary="Change Password" />
             </ListItem>
             <Button sx={{ color: 'white', marginTop: 'auto' }} onClick={handleLogout}>
               <ExitToApp />

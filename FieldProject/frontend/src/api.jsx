@@ -117,6 +117,25 @@ export const getMenteeById = async (id) => {
 };
 
 
+export const getMentors = async () => {
+  try {
+    const response = await api.get(`/mentors/all`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch mentee with ID ${id}:`, error);
+    throw error;
+  }
+};
+
+export const fetchMentorById = async (userId) => {
+  try {
+    const response = await api.get(`/mentors/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching mentor:', error);
+    throw error;
+  }
+};
 
 
 //END NEW ROUTES

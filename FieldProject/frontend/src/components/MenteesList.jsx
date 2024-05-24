@@ -29,7 +29,7 @@ const MenteesList = () => {
 
   const handleMenteeClick = (menteeId) => {
     setMenteeId(menteeId);
-    navigate(`/mentee/dashboard/${menteeId}`);
+    navigate(`/menteedashboard`);
     };
 
   if (loading) {
@@ -41,8 +41,8 @@ const MenteesList = () => {
       <Container>
         <Grid container spacing={2}>
           {mentees.map((mentee) => (
-            <Grid item xs={12} sm={6} md={2.5} key={mentee._id}>
-              <Card onClick={() => handleMenteeClick(mentee._id)}>
+            <Grid item xs={12} sm={6} md={3} key={mentee._id}>
+              <Card style={{minHeight:'450px',maxHeight:'450px'}}onClick={() => handleMenteeClick(mentee._id)}>
                 <CardContent>
                   <img src={mentee.photoLink} alt={`${mentee.name}'s profile`} style={{ width: '100%', height: 'auto' }} />
                   <Typography variant="h6" component="div">
