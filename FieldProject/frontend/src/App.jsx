@@ -102,8 +102,8 @@ console.log(authenticated)
           element={authenticated ? <MentorDashboard /> : <Navigate to="/login" /> } />
 
         <Route path="/mentees/year/:year" element={<MenteesList />} />
-        <Route path="/mentee/dashboard/:menteeId" element={<MenteeDashboard />} />
-        <Route path="/menteedashboard" element={<MenteeDashboard />} />
+        {/* <Route path="/mentee/dashboard/:menteeId" element={<MenteeDashboard />} /> */}
+        <Route path="/menteedashboard/:id" element={<MenteeDashboard />} />
         <Route path="/academics" element={<Academics />} />
         <Route path="/nonacademics" element={<Nonacademics />} />
         <Route path="/remarks" element={<MentorRemarks />} />

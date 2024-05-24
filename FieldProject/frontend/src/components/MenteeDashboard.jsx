@@ -3,8 +3,11 @@ import { Container, Grid, Card, CardContent, Typography, CircularProgress, Avata
 import { getMenteeById } from '../api';
 import { useMentee } from '../MenteeContext';
 import Layout from './Layout';
+import { useParams } from 'react-router-dom';
+
 
 const MenteeDashboard = () => {
+  const {id}=useParams();
   const { menteeId } = useMentee();
   const [mentee, setMentee] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -12,7 +15,7 @@ const MenteeDashboard = () => {
   useEffect(() => {
     const fetchMentee = async () => {
       try {
-        const fetchedMentee = await getMenteeById(menteeId);
+        const fetchedMentee = await getMenteeById(id);
         setMentee(fetchedMentee);
         setLoading(false);
       } catch (error) {
@@ -21,14 +24,15 @@ const MenteeDashboard = () => {
       }
     };
 
-    if (menteeId) {
       fetchMentee();
-    }
-  }, [menteeId]);
+    
+  }, [id]);
 
   if (loading) {
     return <CircularProgress />;
   }
+  console.log(mentee)
+
 
   if (!mentee) {
     return <Typography variant="h6">Mentee not found</Typography>;

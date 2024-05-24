@@ -88,7 +88,7 @@ const Layout = ({ children }) => {
         <Toolbar />
         <List>
           <>
-            <ListItem button component={Link} to={`/menteedashboard`} sx={{ mb: 2, color: 'white' }}>
+<ListItem button component={Link} to={`/menteedashboard/${menteeId}`} sx={{ mb: 2, color: 'white' }}>
               <DashboardIcon />
               <ListItemText primary="Basic Info" />
             </ListItem>

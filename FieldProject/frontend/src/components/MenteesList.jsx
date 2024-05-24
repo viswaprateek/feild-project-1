@@ -29,7 +29,7 @@ const MenteesList = () => {
 
   const handleMenteeClick = (menteeId) => {
     setMenteeId(menteeId);
-    navigate(`/menteedashboard`);
+    navigate(`/menteedashboard/${menteeId}`);
     };
 
   if (loading) {

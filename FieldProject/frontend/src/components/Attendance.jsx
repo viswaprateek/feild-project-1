@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box } from '@mui/material';
 import GaugeChart from 'react-gauge-chart';
 import { useMentee } from '../MenteeContext'; // Importing useMentee to get menteeId
 import { getAttendanceByUserId } from '../api'; // Importing the function from api.jsx
 import Layout from './Layout';
+import './Attendance.css'; // Import the CSS file
 
 const Attendance = () => {
   const { menteeId } = useMentee();
@@ -43,17 +43,15 @@ const Attendance = () => {
   const totalClasses = sumClasses('totalClasses');
   const attendancePercentage = totalClasses > 0 ? (totalAttended / totalClasses) * 100 : 0;
 
-  if (loading) return <Typography>Loading...</Typography>;
-  if (error) return <Typography>{error}</Typography>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <Layout>
-      <Box mt={4}>
-        <Typography variant="h5" style={{ textAlign: 'center' }} component="h3" gutterBottom>
-          Attendance Percentage: {attendancePercentage.toFixed(2)}%
-        </Typography>
-        <Box display="flex" justifyContent="center">
-          <Box width={500} height={400}>
+      <div className="attendance-container">
+        <h3 className="attendance-percentage">Attendance Percentage: {attendancePercentage.toFixed(2)}%</h3>
+        <div className="attendance-content">
+          <div className="gauge-chart-container">
             <GaugeChart id="attendance-gauge"
               nrOfLevels={20}
               colors={["#FF0000", "#FFBB28", "#00FF00"]}
@@ -62,86 +60,81 @@ const Attendance = () => {
               textColor="#000000"
               formatTextValue={() => attendancePercentage.toFixed(2) + '%'}
             />
-          </Box>
-        </Box>
-      </Box>
-      <Container component="main" maxWidth="md">
-        <Typography variant="h5" component="h2" gutterBottom>
-          Attendance
-        </Typography>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Course Code</TableCell>
-                <TableCell align="right">Attended Classes</TableCell>
-                <TableCell align="right">Total Classes</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {attendanceData.map((item, index) => (
-                <React.Fragment key={index}>
-                  <TableRow key={`OS-${index}`}>
-                    <TableCell>{item.OScode}</TableCell>
-                    <TableCell align="right">{item.OSattended}</TableCell>
-                    <TableCell align="right">{item.OStotalClasses}</TableCell>
-                  </TableRow>
-                  <TableRow key={`CO-${index}`}>
-                    <TableCell>{item.COcode}</TableCell>
-                    <TableCell align="right">{item.COattended}</TableCell>
-                    <TableCell align="right">{item.COtotalClasses}</TableCell>
-                  </TableRow>
-                  <TableRow key={`DAA-${index}`}>
-                    <TableCell>{item.DAAcode}</TableCell>
-                    <TableCell align="right">{item.DAAattended}</TableCell>
-                    <TableCell align="right">{item.DAAtotalClasses}</TableCell>
-                  </TableRow>
-                  <TableRow key={`SE-${index}`}>
-                    <TableCell>{item.SEcode}</TableCell>
-                    <TableCell align="right">{item.SEattended}</TableCell>
-                    <TableCell align="right">{item.SEtotalClasses}</TableCell>
-                  </TableRow>
-                  <TableRow key={`EEA-${index}`}>
-                    <TableCell>{item.EEAcode}</TableCell>
-                    <TableCell align="right">{item.EEAattended}</TableCell>
-                    <TableCell align="right">{item.EEAtotalClasses}</TableCell>
-                  </TableRow>
-                  <TableRow key={`IPR-${index}`}>
-                    <TableCell>{item.IPRcode}</TableCell>
-                    <TableCell align="right">{item.IPRattended}</TableCell>
-                    <TableCell align="right">{item.IPRtotalClasses}</TableCell>
-                  </TableRow>
-                  <TableRow key={`WAD-${index}`}>
-                    <TableCell>{item.WADcode}</TableCell>
-                    <TableCell align="right">{item.WADattended}</TableCell>
-                    <TableCell align="right">{item.WADtotalClasses}</TableCell>
-                  </TableRow>
-                  <TableRow key={`SELAB-${index}`}>
-                    <TableCell>{item.SELABcode}</TableCell>
-                    <TableCell align="right">{item.SELABattended}</TableCell>
-                    <TableCell align="right">{item.SELABtotalClasses}</TableCell>
-                  </TableRow>
-                  <TableRow key={`OSLAB-${index}`}>
-                    <TableCell>{item.OSLABcode}</TableCell>
-                    <TableCell align="right">{item.OSLABattended}</TableCell>
-                    <TableCell align="right">{item.OSLABtotalClasses}</TableCell>
-                  </TableRow>
-                  <TableRow key={`FP-${index}`}>
-                    <TableCell>{item.FPcode}</TableCell>
-                    <TableCell align="right">{item.FPattended}</TableCell>
-                    <TableCell align="right">{item.FPtotalClasses}</TableCell>
-                  </TableRow>
-                </React.Fragment>
-              ))}
-              <TableRow>
-                <TableCell><strong>Total</strong></TableCell>
-                <TableCell align="right"><strong>{totalAttended}</strong></TableCell>
-                <TableCell align="right"><strong>{totalClasses}</strong></TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Container>
+          </div>
+          <div className="attendance-table-container">
+            <table className="attendance-table">
+              <thead>
+                <tr>
+                  <th>Course Code</th>
+                  <th>Attended Classes</th>
+                  <th>Total Classes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {attendanceData.map((item, index) => (
+                  <React.Fragment key={index}>
+                    <tr>
+                      <td>{item.OScode}</td>
+                      <td>{item.OSattended}</td>
+                      <td>{item.OStotalClasses}</td>
+                    </tr>
+                    <tr>
+                      <td>{item.COcode}</td>
+                      <td>{item.COattended}</td>
+                      <td>{item.COtotalClasses}</td>
+                    </tr>
+                    <tr>
+                      <td>{item.DAAcode}</td>
+                      <td>{item.DAAattended}</td>
+                      <td>{item.DAAtotalClasses}</td>
+                    </tr>
+                    <tr>
+                      <td>{item.SEcode}</td>
+                      <td>{item.SEattended}</td>
+                      <td>{item.SEtotalClasses}</td>
+                    </tr>
+                    <tr>
+                      <td>{item.EEAcode}</td>
+                      <td>{item.EEAattended}</td>
+                      <td>{item.EEAtotalClasses}</td>
+                    </tr>
+                    <tr>
+                      <td>{item.IPRcode}</td>
+                      <td>{item.IPRattended}</td>
+                      <td>{item.IPRtotalClasses}</td>
+                    </tr>
+                    <tr>
+                      <td>{item.WADcode}</td>
+                      <td>{item.WADattended}</td>
+                      <td>{item.WADtotalClasses}</td>
+                    </tr>
+                    <tr>
+                      <td>{item.SELABcode}</td>
+                      <td>{item.SELABattended}</td>
+                      <td>{item.SELABtotalClasses}</td>
+                    </tr>
+                    <tr>
+                      <td>{item.OSLABcode}</td>
+                      <td>{item.OSLABattended}</td>
+                      <td>{item.OSLABtotalClasses}</td>
+                    </tr>
+                    <tr>
+                      <td>{item.FPcode}</td>
+                      <td>{item.FPattended}</td>
+                      <td>{item.FPtotalClasses}</td>
+                    </tr>
+                  </React.Fragment>
+                ))}
+                <tr>
+                  <td><strong>Total</strong></td>
+                  <td><strong>{totalAttended}</strong></td>
+                  <td><strong>{totalClasses}</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </Layout>
   );
 };
