@@ -7,7 +7,6 @@ const attendanceRoutes =require('./routes/attendanceRoutes')
 const menteeRoutes = require('./routes/menteeRoutes');
 const mentorRoutes = require('./routes/mentorRoutes');
 
-
 require('dotenv').config();
 
 const app = express();
