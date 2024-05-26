@@ -10,9 +10,11 @@ import {
   MenuItem,
   Select,
   FormControl,
-  InputLabel
+  InputLabel,
+  CircularProgress
 } from '@mui/material';
 import { registerMentee, registerMentor } from '../api'; // Import the API functions
+import axios from 'axios';
 
 const AdminDashboard = () => {
   const [userDetails, setUserDetails] = useState({
@@ -23,8 +25,8 @@ const AdminDashboard = () => {
     role: 'mentee',
     parentsNames: '',
     parentsOccupation: '',
-    phone:'',
-    class1:'',
+    phone: '',
+    class1: '',
     bloodGroup: '',
     nationality: '',
     religion: '',
@@ -42,8 +44,10 @@ const AdminDashboard = () => {
     sem8Gpa: '',
     mentorName: '',
     mentorRegistrationNumber: '',
-    photoLink: '', // Add this line
+    photoFile: null, // Change photoLink to photoFile
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,13 +57,39 @@ const AdminDashboard = () => {
     }));
   };
 
+  const handleFileChange = (e) => {
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      photoFile: e.target.files[0],
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
+      let photoLink = '';
+      if (userDetails.photoFile) {
+        const formData = new FormData();
+        formData.append('file', userDetails.photoFile);
+        formData.append('upload_preset', 'x5gcrzk2'); // Replace with your Cloudinary upload preset
+        const response = await axios.post(
+          
+          'https://api.cloudinary.com/v1_1/dtubfmvvq/image/upload', // Replace with your Cloudinary cloud name
+          formData
+        );
+        photoLink = response.data.secure_url;
+      }
+
+      const userDetailsWithPhoto = {
+        ...userDetails,
+        photoLink, // Add photoLink to the user details
+      };
+
       if (userDetails.role === 'mentee') {
-        await registerMentee(userDetails);
+        await registerMentee(userDetailsWithPhoto);
       } else {
-        await registerMentor(userDetails);
+        await registerMentor(userDetailsWithPhoto);
       }
       alert('User registered successfully');
       setUserDetails({
@@ -70,8 +100,8 @@ const AdminDashboard = () => {
         role: 'mentee',
         parentsNames: '',
         parentsOccupation: '',
-        phone:'',
-        class1:'',
+        phone: '',
+        class1: '',
         bloodGroup: '',
         nationality: '',
         religion: '',
@@ -89,11 +119,13 @@ const AdminDashboard = () => {
         sem8Gpa: '',
         mentorName: '',
         mentorRegistrationNumber: '',
-        photoLink: '', // Reset this field as well
+        photoFile: null, // Reset this field as well
       }); // Reset form
     } catch (error) {
       console.error('Failed to register user:', error);
       alert('Failed to register user');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -162,15 +194,19 @@ const AdminDashboard = () => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                label="Photo Link"
-                name="photoLink"
-                value={userDetails.photoLink}
-                onChange={handleChange}
-              />
-            </Grid>
+  <TextField
+    variant="outlined"
+    fullWidth
+    label=""
+    name="photo"
+    type="file"
+    onChange={handleFileChange}
+    InputProps={{
+      style: { backgroundColor: 'rgb(16, 144, 230,0.2)' },
+    }}
+  />
+</Grid>
+
             {userDetails.role === 'mentee' && (
               <>
                 <Grid item xs={12} sm={6}>
@@ -236,25 +272,25 @@ const AdminDashboard = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                label="Phone"
-                name="phone"
-                value={userDetails.phone}
-                onChange={handleChange}
-              />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                label="Class1"
-                name="class1"
-                value={userDetails.class1}
-                onChange={handleChange}
-              />
-              </Grid>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    label="Phone"
+                    name="phone"
+                    value={userDetails.phone}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    label="Class1"
+                    name="class1"
+                    value={userDetails.class1}
+                    onChange={handleChange}
+                  />
+                </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     variant="outlined"
@@ -285,18 +321,86 @@ const AdminDashboard = () => {
                     onChange={handleChange}
                   />
                 </Grid>
-                {Array.from({ length: 8 }, (_, i) => (
-                  <Grid item xs={12} sm={6} key={i}>
-                    <TextField
-                      variant="outlined"
-                      fullWidth
-                      label={`Semester ${i + 1} GPA`}
-                      name={`sem${i + 1}Gpa`}
-                      value={userDetails[`sem${i + 1}Gpa`]}
-                      onChange={handleChange}
-                    />
-                  </Grid>
-                ))}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    label="Sem1 GPA"
+                    name="sem1Gpa"
+                    value={userDetails.sem1Gpa}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    label="Sem2 GPA"
+                    name="sem2Gpa"
+                    value={userDetails.sem2Gpa}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    label="Sem3 GPA"
+                    name="sem3Gpa"
+                    value={userDetails.sem3Gpa}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    label="Sem4 GPA"
+                    name="sem4Gpa"
+                    value={userDetails.sem4Gpa}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    label="Sem5 GPA"
+                    name="sem5Gpa"
+                    value={userDetails.sem5Gpa}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    label="Sem6 GPA"
+                    name="sem6Gpa"
+                    value={userDetails.sem6Gpa}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    label="Sem7 GPA"
+                    name="sem7Gpa"
+                    value={userDetails.sem7Gpa}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    label="Sem8 GPA"
+                    name="sem8Gpa"
+                    value={userDetails.sem8Gpa}
+                    onChange={handleChange}
+                  />
+                </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     variant="outlined"
@@ -319,16 +423,19 @@ const AdminDashboard = () => {
                 </Grid>
               </>
             )}
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                disabled={loading}
+                startIcon={loading ? <CircularProgress size={20} /> : null}
+              >
+                Register
+              </Button>
+            </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            sx={{ mt: 3 }}
-          >
-            Register
-          </Button>
         </Box>
       </Paper>
     </Container>

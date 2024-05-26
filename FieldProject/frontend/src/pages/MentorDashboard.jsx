@@ -59,7 +59,10 @@ const MentorDashboard = () => {
     <MiniLayout>
       <Container>
         <Card>
-          <CardContent>
+          <CardContent style={{ position: 'relative' }}>
+            <div style={{ position: 'absolute', top: '10px', right: '10px', width: '130px', height: '130px', borderRadius: '50%', overflow: 'hidden' , boxShadow:'0px 0px 10px rgba(0, 0, 0, 0.3)'}}>
+              <img src={mentor.photoLink} alt={mentor.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </div>
             <Typography variant="h5" component="div">
               Welcome! {mentor.name}
             </Typography>
@@ -75,9 +78,6 @@ const MentorDashboard = () => {
             <Typography variant="body1" component="div">
               Role: {mentor.role}
             </Typography>
-            {mentor.photoLink && (
-              <img src={mentor.photoLink} alt={mentor.name} style={{ width: '100%', height: 'auto', marginTop: '1rem' }} />
-            )}
           </CardContent>
         </Card>
 

@@ -96,15 +96,7 @@ export const registerMentor = async (mentorDetails) => {
 };
 
 
-// export const getMenteesByYear = async (year) => {
-//   try {
-//     const response = await api.get(`/mentees/year/${year}`);
-//     return response.data;
-//   } catch (error) {
-//     console.error(`Failed to fetch mentees for year ${year}:`, error);
-//     throw error;
-//   }
-// };
+
 export const getMenteesByMentorAndYear = async (mentorId, year) => {
   try {
     const response = await api.get(`/mentees/mentor/${mentorId}/year/${year}`);
