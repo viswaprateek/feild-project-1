@@ -96,12 +96,21 @@ export const registerMentor = async (mentorDetails) => {
 };
 
 
-export const getMenteesByYear = async (year) => {
+// export const getMenteesByYear = async (year) => {
+//   try {
+//     const response = await api.get(`/mentees/year/${year}`);
+//     return response.data;
+//   } catch (error) {
+//     console.error(`Failed to fetch mentees for year ${year}:`, error);
+//     throw error;
+//   }
+// };
+export const getMenteesByMentorAndYear = async (mentorId, year) => {
   try {
-    const response = await api.get(`/mentees/year/${year}`);
+    const response = await api.get(`/mentees/mentor/${mentorId}/year/${year}`);
     return response.data;
   } catch (error) {
-    console.error(`Failed to fetch mentees for year ${year}:`, error);
+    console.error(`Failed to fetch mentees for mentor ${mentorId} and year ${year}:`, error);
     throw error;
   }
 };
@@ -147,6 +156,9 @@ export const getAttendanceByUserId = async (userId) => {
   }
 };
 
+
+export const changePassword = (id, currentPassword, newPassword,role) => 
+  api.put(`/mentees/changepassword/${id}`, { currentPassword, newPassword,role });
 
 
 //END NEW ROUTES
@@ -201,18 +213,7 @@ export const loginuser = async (name, password, role) => {
  * @returns {Promise} - A Promise that resolves to the response data if successful.
  * @throws {Error} - An error if the change password request fails.
  */
-export const changePassword = async (currentPassword, newPassword, accessToken) => {
-  try {
-    const response = await api.post('/auth/change-password', { currentPassword, newPassword }, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    return response.data; // Return the response data if the password change is successful.
-  } catch (error) {
-    throw error; // Throw an error if the password change request fails.
-  }
-};
+
 
 export const logout = async (accessToken) => {
   try {

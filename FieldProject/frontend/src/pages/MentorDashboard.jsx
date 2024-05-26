@@ -14,8 +14,9 @@ const MentorDashboard = () => {
   const navigate = useNavigate();
 
   const handleYearClick = (year) => {
-    navigate(`/mentees/year/${year}`);
+    navigate(`/mentees/mentor/${userId}/year/${year}`);
   };
+  
 
   useEffect(() => {
     const getMentor = async () => {

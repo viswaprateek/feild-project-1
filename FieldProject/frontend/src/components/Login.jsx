@@ -56,10 +56,10 @@ function Login() {
                 </Form.Select>
               </Form.Group>
               <Form.Group className="mb-2" controlId="name">
-                <Form.Label className="text-white">Email Address</Form.Label>
+                <Form.Label className="text-white">Username</Form.Label>
                 <Form.Control
-                  type="email"
-                  placeholder="Enter your email"
+                  type="Username"
+                  placeholder="Enter your username"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required

@@ -166,7 +166,8 @@ const Layout = ({ children }) => {
               <EventIcon />
               <ListItemText primary="Meeting Schedules" />
             </ListItem>
-            <ListItem button component={Link} to="/changepassword" sx={{ mb: 2, color: 'white' }}>
+            <ListItem button component={Link} to= {`/changepassword/`} sx={{ mb: 2, color: 'white' }}>
+
               <LockIcon />
               <ListItemText primary="Change Password" />
             </ListItem>

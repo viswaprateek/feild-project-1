@@ -44,7 +44,9 @@ console.log(authenticated)
         {/* Signup Route: Renders the Signup component if the user is not authenticated; otherwise, navigates to the Dashboard. */}
           
         
+       
         {/* Login Route: Renders the Login component if the user is not authenticated; otherwise, navigates to the Dashboard. */}
+      
         <Route
         path="/login"
         element={
@@ -52,7 +54,7 @@ console.log(authenticated)
             userRole === 'mentor' ? (
               <Navigate to="/mentordashboard" />
             ) : (
-              <Navigate to={`/menteedashboard`} />
+              <Navigate to={`/menteedashboard/${menteeId}`} />
             )
           ) : (
             <Login />
@@ -101,8 +103,10 @@ console.log(authenticated)
         <Route path="/mentorDashboard"
           element={authenticated ? <MentorDashboard /> : <Navigate to="/login" /> } />
 
-        <Route path="/mentees/year/:year" element={<MenteesList />} />
+        {/* <Route path="/mentees/year/:year" element={<MenteesList />} /> */}
         {/* <Route path="/mentee/dashboard/:menteeId" element={<MenteeDashboard />} /> */}
+        <Route path="/mentees/mentor/:mentorId/year/:year" element={<MenteesList />} />
+
         <Route path="/menteedashboard/:id" element={<MenteeDashboard />} />
         <Route path="/academics" element={<Academics />} />
         <Route path="/nonacademics" element={<Nonacademics />} />
