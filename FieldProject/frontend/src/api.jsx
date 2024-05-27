@@ -69,6 +69,91 @@ export const setAuthToken = (token) => {
  */
 // api.js
 
+
+
+// NEW ROUTES
+
+// Other imports...
+
+export const registerMentee = async (data) => {
+  try {
+    const response = await api.post('/mentees/register', data);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to register mentee:', error);
+    throw error;
+  }
+};
+
+export const registerMentor = async (mentorDetails) => {
+  try {
+    const response = await api.post('/mentors/register', mentorDetails);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to register mentor:', error);
+    throw error;
+  }
+};
+
+
+
+export const getMenteesByMentorAndYear = async (mentorId, year) => {
+  try {
+    const response = await api.get(`/mentees/mentor/${mentorId}/year/${year}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch mentees for mentor ${mentorId} and year ${year}:`, error);
+    throw error;
+  }
+};
+
+export const getMenteeById = async (id) => {
+  try {
+    const response = await api.get(`/mentees/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch mentee with ID ${id}:`, error);
+    throw error;
+  }
+};
+
+
+export const getMentors = async () => {
+  try {
+    const response = await api.get(`/mentors/all`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch mentee with ID ${id}:`, error);
+    throw error;
+  }
+};
+
+export const fetchMentorById = async (userId) => {
+  try {
+    const response = await api.get(`/mentors/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching mentor:', error);
+    throw error;
+  }
+};
+
+export const getAttendanceByUserId = async (userId) => {
+  try {
+    const response = await api.get(`/attendance/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching attendance data:', error);
+    throw error;
+  }
+};
+
+
+export const changePassword = (id, currentPassword, newPassword,role) => 
+  api.put(`/mentees/changepassword/${id}`, { currentPassword, newPassword,role });
+
+
+//END NEW ROUTES
 export const signup = async ({ email, password, name, role, bio, skills, portfolio, projects, bids }) => {
   try {
     const response = await api.post('/user-api/auth/signup', {
@@ -101,14 +186,15 @@ export const signup = async ({ email, password, name, role, bio, skills, portfol
  * @returns {Promise} - A Promise that resolves to the response data if successful.
  * @throws {Error} - An error if the login request fails.
  */
-export const loginuser = async (name, password) => {
+export const loginuser = async (name, password, role) => {
   try {
-    const response = await api.post('/user-api/auth/login', { name, password });
-    return response.data; // Return the response data if the login is successful.
+    const response = await api.post('/user-api/auth/login', { name, password, role });
+    return response.data;
   } catch (error) {
-    throw error; // Throw an error if the login request fails.
+    throw error;
   }
 };
+
 
 
 /**
@@ -119,18 +205,7 @@ export const loginuser = async (name, password) => {
  * @returns {Promise} - A Promise that resolves to the response data if successful.
  * @throws {Error} - An error if the change password request fails.
  */
-export const changePassword = async (currentPassword, newPassword, accessToken) => {
-  try {
-    const response = await api.post('/auth/change-password', { currentPassword, newPassword }, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    return response.data; // Return the response data if the password change is successful.
-  } catch (error) {
-    throw error; // Throw an error if the password change request fails.
-  }
-};
+
 
 export const logout = async (accessToken) => {
   try {

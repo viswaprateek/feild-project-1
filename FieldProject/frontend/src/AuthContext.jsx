@@ -1,30 +1,28 @@
-// AuthContext.jsx
-/* eslint-disable react/prop-types */
 import { createContext, useContext, useState, useEffect } from 'react';
 import { setAuthToken } from './api'; // Import the setAuthToken function
 import { useCookies } from 'react-cookie';
+import { useMentee } from './MenteeContext'; // Import useMentee hook
 
 // Create a context to manage authentication state
 const AuthContext = createContext();
 
-/**
- * AuthProvider component responsible for managing the authentication state.
- * 
- * @param {Object} children - React components to be wrapped by AuthProvider.
- */
 export function AuthProvider({ children }) {
-  // State variables to manage authentication status, access token, user role, and user ID
+  const { setMenteeId } = useMentee(); // Use the setMenteeId function from MenteeContext
+
+  // State variables to manage authentication status, access token, user role, user ID, and name
   const [authenticated, setAuthenticated] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(['role', 'accessToken', 'userId']);
+  const [cookies, setCookie, removeCookie] = useCookies(['role', 'accessToken', 'userId', 'name']);
   const [accessToken, setAccessToken] = useState(null);
   const [userRole, setUserRole] = useState("");
   const [userId, setUserId] = useState("");
-  
+  const [name, setName] = useState(""); // Add name state
+
   useEffect(() => {
     // Check if the access token is valid when the component is mounted
     const savedAccessToken = cookies.accessToken;
     const role1 = cookies.role;
     const savedUserId = cookies.userId;
+    const savedName = cookies.name; // Retrieve name from cookies
     
     if (savedAccessToken) {
       setAuthenticated(true);
@@ -32,76 +30,54 @@ export function AuthProvider({ children }) {
       setAuthToken(savedAccessToken); // Set the authorization header
       setUserRole(role1);
       setUserId(savedUserId); // Set the userId retrieved from cookies
+      setName(savedName); // Set the name retrieved from cookies
+      
+      // Set menteeId if role is mentee
+      if (role1 === 'mentee') {
+        setMenteeId(savedUserId);
+      }
     }
-  }, [cookies]);
-  
+  }, [cookies, setMenteeId]);
 
-  /**
-   * Function to get a specific cookie value by name.
-   * 
-   * @param {string} name - The name of the cookie to retrieve.
-   * @returns {string} - The value of the cookie if found, or null.
-   */
-  const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  }
-
-  /**
-   * Function to log in a user and set their access token.
-   * 
-   * @param {string} token - The user's access token.
-   * @param {string} role - The user's role.
-   * @param {string} id - The user's ID.
-   */
-  const login = (token, role, id) => {
-    console.log("Setting cookies and context values:", token, role, id);
-  
-    setCookie('accessToken', token, {path: '/', secure: true, sameSite: 'None' });
-    setCookie('role', role, {path: '/', secure: true, sameSite: 'None' });
-    setCookie('userId', id, {path: '/', secure: true, sameSite: 'None' });
+  const login = (token, role, id, userName) => {
+    setCookie('accessToken', token, { path: '/', secure: true, sameSite: 'None' });
+    setCookie('role', role, { path: '/', secure: true, sameSite: 'None' });
+    setCookie('userId', id, { path: '/', secure: true, sameSite: 'None' });
+    setCookie('name', userName, { path: '/', secure: true, sameSite: 'None' });
     setAccessToken(token);
     setAuthenticated(true);
     setUserRole(role);
-    setUserId(id);  // Log to ensure this is being set
-    console.log("After setting in context:", userId);
-    setAuthToken(token); // Update the authorization header
+    setUserId(id);
+    setName(userName);
+    setAuthToken(token);
+    
+    // Set menteeId if role is mentee
+    if (role === 'mentee') {
+      setMenteeId(id);
+    }
   }
-  
-  
 
-  /**
-   * Function to log out a user by clearing their access token and authentication status.
-   */
   const logout = () => {
     removeCookie('accessToken', { path: '/' });
     removeCookie('role', { path: '/' });
     removeCookie('userId', { path: '/' });
+    removeCookie('name', { path: '/' });
     setAccessToken(null);
     setAuthenticated(false);
     setUserRole("");
     setUserId("");
-    setAuthToken(null); // Clear the authorization header
-  
-    // Additional step: Force a re-render or handle navigation
+    setName("");
+    setAuthToken(null);
     window.location.href = '/'; // Redirect to login or home page
   }
-  
 
-  // Provide the authentication state and functions to child components using the context.
   return (
-    <AuthContext.Provider value={{ authenticated, accessToken, userRole, userId, login, logout }}>
+    <AuthContext.Provider value={{ authenticated, accessToken, userRole, userId, name, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-/**
- * Custom hook to access the authentication context values.
- * 
- * @returns {Object} - An object with authentication state and functions.
- */
 export function useAuth() {
   return useContext(AuthContext);
 }
