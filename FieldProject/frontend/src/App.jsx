@@ -1,15 +1,11 @@
 // app.jsx
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
-import UserDashboard from './pages/UserDashboard';
 import ChangePassword from './components/ChangePassword';
 import { useAuth } from "./AuthContext";
 import Home from './pages/Home';
 import ErrorPage from './pages/ErrorPage';
-import Profile from './pages/Profile';
-import Jobs from './pages/Jobs';
-import Bids from './pages/Bids';
-import JobDetailPage from './pages/JobDetailed';
+
 import { AuthProvider } from './AuthContext';
 import { MenteeProvider, useMentee } from './MenteeContext';
 import MenteeDashboard from './components/MenteeDashboard'
@@ -71,27 +67,13 @@ console.log(authenticated)
         
         {/* Dashboard Route: Renders the Dashboard component if the user is authenticated; otherwise, navigates to the Login page. */}
         
-        <Route 
-          path="/user/dashboard"
-          element={authenticated ? <UserDashboard /> : <Navigate to="/login" /> }
-        />
+   
 
 
-        <Route
-          path="/user/profile"
-          element={<Profile />}
-        />
-        <Route
-          path="/user/jobs"
-          element={<Jobs />}
-     ment={<JobDetailPage />}
-        />
+   
+   
        
-    
-        <Route
-          path="/user/bids"
-          element={<Bids />}
-        />
+  
         {/* <Route
           path="/freelancer/profile"
           element={<Profile />}

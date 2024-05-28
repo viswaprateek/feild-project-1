@@ -12,7 +12,8 @@ function Login() {
   const [role, setRole] = useState("mentor");
   const [error, setError] = useState("");
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault(); // Prevent default form submission
     try {
       const response = await loginuser(name, password, role);
       const accessToken = response.token;
@@ -36,14 +37,13 @@ function Login() {
               className="logo" 
             />
             <h1 className="h3 my-1 fw-normal text-white"><strong>VNR VJIET</strong></h1>
-            {/* <h2 className="h4 my-1 fw-normal text-white">Bachupally</h2> */}
             <h3 className="h5 my-1 fw-normal text-white"><i>Mentor Connect</i></h3>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col>
             <h4 className="my-3 fw-normal text-center text-white"><strong>Login</strong></h4>
-            <Form>
+            <Form onSubmit={handleLogin}>
               <Form.Group className="mb-2" controlId="role">
                 <Form.Label className="text-white">Role</Form.Label>
                 <Form.Select
@@ -58,7 +58,7 @@ function Login() {
               <Form.Group className="mb-2" controlId="name">
                 <Form.Label className="text-white">Username</Form.Label>
                 <Form.Control
-                  type="Username"
+                  type="text"
                   placeholder="Enter your username"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -75,7 +75,7 @@ function Login() {
                   required
                 />
               </Form.Group>
-              <Button variant="primary" type="button" onClick={handleLogin} className="w-100">
+              <Button variant="primary" type="submit" className="w-100">
                 Login
               </Button>
               {error && (
